@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <div class="header">Guess A Number From 1 To 100</div>
+        <p class="guess"></p>
+        <div class="input-field">
+            <input type="number"/>
+            <button class="button">Check</button>
+        </div>
+        <p>You Have <span class="chances">10 </span>Chances</p>
+    </div>
+
+
+
+
+
+
+
+
+    <script>
+        const r = Number.parseInt(Math.random() * 256);
+        const g = Number.parseInt(Math.random() * 256);
+        const b = Number.parseInt(Math.random() * 256);
+        // main
+        const button =document.querySelector(".button"),
+        input = document.querySelector("input"),
+        guess = document.querySelector(".guess"),
+        chances = document.querySelector(".chances");
+        console.log(r, g, b);
+        //color bg
+        document.querySelector("body").style.background = `rgba(${r},${g},${b},1)`;
+        button.style.background = `rgba(${r},${g},${b},1)`;
+        console.log(`rgba(${r},${g},${b},1)`);
+        //main guess work
+
+        input.focus();
+
+        let random =Math.floor(Math.random()*100);
+        console.log(random);
+        console.log(guess);
+        let chance = 10;
+
+        button.addEventListener("click" , function(){
+            chance--;
+            let inputValue = input.value;
+            
+            if(inputValue == random){
+                guess.textContent = "congratulations";
+                input.disabled = true;
+                [button.textContent , guess.style.color ]=["Replay",`rgba(${r},${g},${b},1)`];
+                button.addEventListener("click",()=>{
+                    window.location.reload();
+                })
+            }
+            else if (inputValue > random && inputValue <100) {
+                [guess.textContent, chances.textContent] = ["You guess is High", chance];
+                guess.style.color=`rgba(${r},${g},${b},1)`;
+            }
+            else if (inputValue < random && inputValue >0) {
+                [guess.textContent, chances.textContent] = ["You guess is Low", chance];
+                guess.style.color=`rgba(${r},${g},${b},1)`;
+            }
+            else{
+                guess.textContent ="you lose"
+            }
+            
+             if(chance == 0){
+                [button.textContent , input.disabled,inputValue] = ["Replay" , true , ""];
+                [guess.textContent , guess.style.color] =["You are Lose the game hahah", "red"]
+
+            }
+             if(chance < 0){
+                confirm("You lose The Game and replaying the game")
+                window.location.reload();
+            }
+            })
+    </script>
+</body>
+
+</html>
